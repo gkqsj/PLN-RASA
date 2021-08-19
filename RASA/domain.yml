@@ -1,33 +1,45 @@
 version: "2.0"
 
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - find_train
+  - book_train
+  - ask_trivia
+
+entities:
+  - train-destination
+  - train-departure
+  - train-day
+  - train-bookpeople
+  - train-arriveby
+  - train-leaveat
+
+slots:
+  train-destination: 
+      type: text
+  train-departure: 
+      type: text
+  train-day:
+      type: any
+  train-bookpeople:
+      type: any
+  train-arriveby:
+      type: any
+  train-leaveat:
+      type: any
 
 responses:
-  utter_greet:
-  - text: "Hey! How are you?"
+    utter_greet:
+        - text: Hi, I'm a bot here to help you book a train!
+        - text: Hello! How can I help you?
+        - text: How are you? I'm here to help you book your train!
+    utter_no_available_trains:
+        - text: I'm sorry, I didn't find any trains that fit your needs
+    utter_show_available_trains:
+        - text: "I've found this train: Train {train-trainid} from {train-departure} to {train-destination} at {train-leaveat} on {train-day}."
+    
+actions:
+- action_look_for_train
 
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
 
 session_config:
   session_expiration_time: 60
