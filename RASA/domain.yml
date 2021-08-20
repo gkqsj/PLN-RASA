@@ -1,44 +1,103 @@
 version: "2.0"
 
+slots:
+  train-destination: 
+    type: text
+  train-departure: 
+    type: text
+  train-day:
+    type: text
+  train-bookpeople:
+    type: text
+  train-arriveby:
+    type: text
+  train-leaveat:
+    type: text
+
 intents:
   - find_train
   - book_train
   - ask_trivia
+  - positive
+  - negative
+  - greet
 
 entities:
-  - train-destination
   - train-departure
   - train-day
   - train-bookpeople
   - train-arriveby
   - train-leaveat
 
-slots:
-  train-destination: 
-      type: text
-  train-departure: 
-      type: text
-  train-day:
-      type: any
-  train-bookpeople:
-      type: any
-  train-arriveby:
-      type: any
-  train-leaveat:
-      type: any
+forms:
+  find_train_form:
+    required_slots:
+      train-destination: 
+      - type: from_entity
+        entity: train-destination
+        intent: find_train
+      train-departure:
+      - type: from_entity
+        entity: train-departure
+        intent: find_train
+      train-day:
+      - type: from_entity
+        entity: train-day
+        intent: find_train
+    
+  find_hours_form:
+    required_slots:
+      train-arriveby: 
+      - type: from_entity
+        entity: train-arriveby
+        intent: find_train
+      train-leaveat:
+      - type: from_entity
+        entity: train-leaveat
+        intent: find_train
+    
+  book_train_form:
+    required_slots:
+      train-bookpeople:
+      - type: from_entity
+        entity: train-day
+        intent: find_train
+    #TrainID?
+
 
 responses:
-    utter_greet:
-        - text: Hi, I'm a bot here to help you book a train!
-        - text: Hello! How can I help you?
-        - text: How are you? I'm here to help you book your train!
-    utter_no_available_trains:
-        - text: I'm sorry, I didn't find any trains that fit your needs
-    utter_show_available_trains:
-        - text: "I've found this train: Train {train-trainid} from {train-departure} to {train-destination} at {train-leaveat} on {train-day}."
-    
-actions:
-- action_look_for_train
+  utter_ask_train-destination:
+  - text: "Gimme destination"
+  utter_ask_train-departure:
+  - text: "Gimme departure"
+  utter_ask_train-day:
+  - text: "Gimme day"
+  utter_ask_train-arriveby:
+  - text: "Gimme arriveby"
+  utter_ask_train-leaveat:
+  - text: "Gimme leaveat"
+  utter_ask_train-bookpeople:
+  - text: "Gimme bookpeople"
+  utter_give_find_slots:
+  - text: "Gimme destination, departure and day"
+  utter_give_hours_slots:
+  - text: "Ok, arriveby: {train-arriveby} and leaveat {train-leaveat}"
+  utter_book_finished:
+  - text: "Ok, booking finished"
+
+
+
+  utter_ask_for_train:
+  - text: "Hi, I can help you look for a train"
+  utter_ask_preference:
+  - text: "Would you like to specify a train's hour?"
+  utter_ask_hour:
+  - text: "Gimme arriveby and leaveat"
+
+  utter_found_your_train_with_hour:
+  - text: "(List of trains)"
+  utter_found_your_train_without_hour:
+  - text: "(List of trains)"
 
 
 session_config:

@@ -2,12 +2,69 @@ version: "2.0"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
+- rule:  Activate find form
+  steps: 
+  - intent: find_train
+  - action: find_train_form
+  - active_loop: find_train_form
 
-- rule: Say 'I am a bot' anytime the user challenges
+- rule: Deactivate find form
+  condition:
+  - active_loop: find_train_form
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - action: find_train_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_give_find_slots
+
+- rule: Activate find hours form
+  condition:
+  - slot_was_set:
+    - train-destination: train-destination
+  - slot_was_set:
+    - train-departure: train-departure
+  - slot_was_set:
+    - train-day: train-day
+  steps:
+  - intent: find_train
+  - action: find_hours_form
+  - active_loop: find_hours_form
+
+- rule: Deactivate find hours form
+  condition:
+  - active_loop: find_hours_form
+  steps:
+  - action: find_hours_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_give_hours_slots
+   
+
+- rule: Activate book train form
+  condition:
+  - slot_was_set:
+    - train-destination: train-destination
+  - slot_was_set:
+    - train-departure: train-departure
+  - slot_was_set:
+    - train-day: train-day
+  - slot_was_set:
+    - train-arriveby: train-arriveby
+  - slot_was_set:
+    - train-leaveat: train-leaveat
+  steps:
+  - intent: book_train
+  - action: book_train_form
+  - active_loop: book_train_form
+
+- rule: Deactivate book train form
+  condition:
+  - active_loop: book_train_form
+  steps:
+  - action: book_train_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_book_finished
