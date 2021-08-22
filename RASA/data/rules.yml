@@ -17,30 +17,7 @@ rules:
   - slot_was_set:
     - requested_slot: null
   - action: utter_give_find_slots
-
-- rule: Activate find hours form
-  condition:
-  - slot_was_set:
-    - train-destination: train-destination
-  - slot_was_set:
-    - train-departure: train-departure
-  - slot_was_set:
-    - train-day: train-day
-  steps:
-  - intent: find_train
-  - action: find_hours_form
-  - active_loop: find_hours_form
-
-- rule: Deactivate find hours form
-  condition:
-  - active_loop: find_hours_form
-  steps:
-  - action: find_hours_form
-  - active_loop: null
-  - slot_was_set:
-    - requested_slot: null
-  - action: utter_give_hours_slots
-   
+  - action: action_found_your_train_with_hour
 
 - rule: Activate book train form
   condition:
@@ -68,3 +45,17 @@ rules:
   - slot_was_set:
     - requested_slot: null
   - action: utter_book_finished
+  - action: utter_what_else
+
+- rule: case after book
+  steps:
+  - action: utter_what_else
+  - intent: positive
+  - action: action_reset_all_slots
+  - action: utter_ask_for_train
+
+- rule: case book end
+  steps:
+  - action: utter_what_else
+  - intent: negative
+  - action: utter_farewell

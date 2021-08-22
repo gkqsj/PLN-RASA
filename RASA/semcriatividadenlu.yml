@@ -1,0 +1,15 @@
+version: "2.0"
+nlu:
+- intent: greet
+  examples: |
+    - hi
+- intent: find_train
+  examples: |
+    - I want to go to [ely](train-destination), from [cambridge](train-departure) on [friday](train-day), leaving at [15:00](train-leaveat), it could arrive at [18:00](train-arriveby)
+    - i want a train that leaves from [norwich](train-departure)
+- intent: book_train
+  examples: |
+    - I want it booked for [2](train-bookpeople) people
+- intent: positive
+  examples: |
+    - yes

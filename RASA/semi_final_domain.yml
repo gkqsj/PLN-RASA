@@ -4,12 +4,12 @@ session_config:
   carry_over_slots_to_new_session: true
 intents:
 - greet
-- ask_trivia
-- find_train
-- positive
-- finish_query
 - negative
 - book_train
+- find_train
+- ask_trivia
+- positive
+- finish_query
 entities:
 - train-arriveby
 - train-bookpeople
@@ -17,6 +17,7 @@ entities:
 - train-departure
 - train-destination
 - train-leaveat
+- trainID
 slots:
   train-destination:
     type: text
@@ -57,7 +58,7 @@ responses:
   utter_book_finished:
   - text: Ok, booking finished for train {trainID}
   utter_ask_for_train:
-  - text: Hi, I can help you look for a train or tell you something nice
+  - text: Hi, I can help you look for a train
   utter_ask_hour:
   - text: Gimme arriveby and leaveat
   utter_farewell:
@@ -66,20 +67,12 @@ responses:
   - text: Good bye
   utter_what_else:
   - text: Can I do something else for you?
-  utter_some_tivia:
-  - text: |-
-      Knock Knock
-      Who's there?
-      It's me, a train
-      *opens door
-      YOU DIED
 actions:
 - action_found_your_train_with_hour
-- action_reset_all_slots
 - utter_ask_for_train
+- utter_book_finished
 - utter_farewell
 - utter_give_find_slots
-- utter_some_tivia
 - utter_what_else
 forms:
   find_train_form:

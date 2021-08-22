@@ -1,0 +1,40 @@
+
+version: "2.0"
+stories:
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_ask_for_train
+  - intent: find_train
+    entities:
+    - train-departure: cambridge
+    - train-destination: norwich
+    - train-day: sunday
+  - slot_was_set:
+    - train-destination: norwich
+  - slot_was_set:
+    - train-departure: cambridge
+  - slot_was_set:
+    - train-day: sunday
+  - action: utter_give_find_slots
+  - action: utter_ask_preference
+  - intent: positive
+  - action: find_hours_form
+  - active_loop: find_hours_form
+  - slot_was_set:
+    - requested_slot: train-arriveby
+  - slot_was_set:
+    - train-arriveby: 07:00
+  - slot_was_set:
+    - train-arriveby: 07:00
+  - slot_was_set:
+    - requested_slot: train-leaveat
+  - slot_was_set:
+    - train-leaveat: 17:26
+  - slot_was_set:
+    - train-leaveat: 17:26
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_give_hours_slots
+  - action: utter_found_your_train_with_hour

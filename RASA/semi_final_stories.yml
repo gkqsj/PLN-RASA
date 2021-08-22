@@ -1,0 +1,70 @@
+
+version: "2.0"
+stories:
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_ask_for_train
+  - intent: find_train
+    entities:
+    - train-destination: ely
+    - train-departure: cambridge
+    - train-day: friday
+    - train-leaveat: 15:00
+  - slot_was_set:
+    - train-destination: ely
+  - slot_was_set:
+    - train-departure: cambridge
+  - slot_was_set:
+    - train-day: friday
+  - slot_was_set:
+    - train-leaveat: 15:00
+  - action: find_train_form
+  - active_loop: find_train_form
+  - slot_was_set:
+    - train-destination: ely
+  - slot_was_set:
+    - train-departure: cambridge
+  - slot_was_set:
+    - train-day: friday
+  - slot_was_set:
+    - train-leaveat: 15:00
+  - slot_was_set:
+    - train-destination: ely
+  - slot_was_set:
+    - train-departure: cambridge
+  - slot_was_set:
+    - train-day: friday
+  - slot_was_set:
+    - train-leaveat: 15:00
+  - slot_was_set:
+    - requested_slot: train-arriveby
+  - slot_was_set:
+    - train-arriveby: 21:00
+  - slot_was_set:
+    - train-arriveby: 21:00
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_give_find_slots
+  - action: action_found_your_train_with_hour
+  - intent: book_train
+    entities:
+    - trainID: TR6053
+  - slot_was_set:
+    - trainID: TR6053
+  - action: book_train_form
+  - active_loop: book_train_form
+  - slot_was_set:
+    - requested_slot: train-bookpeople
+  - slot_was_set:
+    - train-bookpeople: '6'
+  - slot_was_set:
+    - train-bookpeople: '6'
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_book_finished
+  - action: utter_what_else
+  - intent: negative
+  - action: utter_farewell

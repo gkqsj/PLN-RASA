@@ -1,15 +1,14 @@
 version: '2.0'
 session_config:
-  session_expiration_time: 600
+  session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
 - greet
-- ask_trivia
 - find_train
 - positive
-- finish_query
-- negative
 - book_train
+- ask_trivia
+- negative
 entities:
 - train-arriveby
 - train-bookpeople
@@ -36,9 +35,6 @@ slots:
   train-leaveat:
     type: text
     influence_conversation: true
-  trainID:
-    type: text
-    influence_conversation: true
 responses:
   utter_ask_train-destination:
   - text: Gimme destination
@@ -53,34 +49,27 @@ responses:
   utter_ask_train-bookpeople:
   - text: Gimme bookpeople
   utter_give_find_slots:
-  - text: 'Ok, destination: {train-destination}, departure: {train-departure}, arriveby: {train-arriveby} and leaveat {train-leaveat} and day {train-day}'
+  - text: Gimme destination, departure and day
+  utter_give_hours_slots:
+  - text: 'Ok, arriveby: {train-arriveby} and leaveat {train-leaveat}'
   utter_book_finished:
-  - text: Ok, booking finished for train {trainID}
+  - text: Ok, booking finished
   utter_ask_for_train:
-  - text: Hi, I can help you look for a train or tell you something nice
+  - text: Hi, I can help you look for a train
+  utter_ask_preference:
+  - text: Would you like to specify a train's hour?
   utter_ask_hour:
   - text: Gimme arriveby and leaveat
-  utter_farewell:
-  - text: Bye bye
-  - text: Farewell
-  - text: Good bye
-  utter_what_else:
-  - text: Can I do something else for you?
-  utter_some_tivia:
-  - text: |-
-      Knock Knock
-      Who's there?
-      It's me, a train
-      *opens door
-      YOU DIED
+  utter_found_your_train_with_hour:
+  - text: (List of trains)
+  utter_found_your_train_without_hour:
+  - text: (List of trains)
 actions:
-- action_found_your_train_with_hour
-- action_reset_all_slots
 - utter_ask_for_train
-- utter_farewell
+- utter_ask_preference
+- utter_found_your_train_with_hour
 - utter_give_find_slots
-- utter_some_tivia
-- utter_what_else
+- utter_give_hours_slots
 forms:
   find_train_form:
     required_slots:
@@ -96,6 +85,8 @@ forms:
       - type: from_entity
         entity: train-day
         intent: find_train
+  find_hours_form:
+    required_slots:
       train-arriveby:
       - type: from_entity
         entity: train-arriveby
@@ -108,5 +99,5 @@ forms:
     required_slots:
       train-bookpeople:
       - type: from_entity
-        entity: train-bookpeople
-        intent: book_train
+        entity: train-day
+        intent: find_train
